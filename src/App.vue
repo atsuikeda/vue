@@ -33,25 +33,24 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #fceabb, #f8b500);
+  background: linear-gradient(to bottom, #e6f4ea, #b2dfdb);
   font-family: 'Zen Maru Gothic', sans-serif;
   text-align: center;
 }
 
 h1 {
   font-size: 2.8rem;
-  color: #5d4037;
+  color: #2e7d32; /* 深めのグリーン */
   margin-bottom: 40px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .eho-count {
   font-size: 3rem;
   font-weight: bold;
-  color: #d84315;
-  background: #fff3e0;
+  color: #388e3c; /* 明るめの緑 */
+  background: #e8f5e9; /* 薄いグリーン背景 */
   padding: 20px 40px;
   border-radius: 20px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
