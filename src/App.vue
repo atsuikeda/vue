@@ -11,11 +11,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+import rightImg from '@/assets/right.jpg'
+import leftImg from '@/assets/left.jpg'
+
 const keydownCount = ref(0)
 const isRightFoot = ref(true)
-
-const rightImg = '/right.jpg'
-const leftImg = '/left.jpg'
 
 const handleKeydown = () => {
   keydownCount.value++
