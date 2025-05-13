@@ -1,26 +1,21 @@
-# Pythonの公式イメージをベースに使用
 FROM python:3.11-slim
 
-# 作業ディレクトリを設定
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 WORKDIR /app
 
-# 必要なパッケージをインストール
-RUN apt-get update && apt-get install -y \
-    default-libmysqlclient-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Poetry のインストール
+RUN pip install --no-cache-dir poetry==1.8.4
 
-# 依存関係ファイルをコピー
-COPY requirements.txt .
+# pyproject.tomlのみ先にコピー
+COPY backend/app/pyproject.toml /app/
 
-# 依存関係のインストール
-RUN pip install --no-cache-dir -r requirements.txt
+# Poetry による依存関係インストール（poetry.lockが自動生成される）
+RUN poetry install --no-root
 
 # ソースコードをコピー
-COPY . .
-
-# ポートを公開
-EXPOSE 3000
+COPY backend/app /app/
 
 # 開発サーバーを起動
-CMD ["python", "app.py"] 
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
