@@ -17,5 +17,5 @@ RUN rm -rf node_modules package-lock.json && \
 # ソースコードをコピー
 COPY frontend/app ./
 
-# 開発サーバーを起動
-CMD ["npm", "run", "dev"]
+# 開発サーバーを起動（ホスト設定を追加）
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
