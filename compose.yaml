@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./containers/mysql/init:/docker-entrypoint-initdb.d
+      - ./containers/mysql/init:/docker-entrypoint-initdb.d:ro
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
     #ヘルスチェックを使ってmysqlが作成されてからFastAPIが起動するようにする
     healthcheck:
