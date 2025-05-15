@@ -9,13 +9,13 @@ WORKDIR /app
 RUN pip install --no-cache-dir poetry==1.8.4
 
 # pyproject.tomlのみ先にコピー
-COPY backend/app/pyproject.toml /app/
+COPY backend/app/pyproject.toml ./
 
-# Poetry による依存関係インストール（poetry.lockが自動生成される）
+# Poetry による依存関係インストール
 RUN poetry install --no-root
 
 # ソースコードをコピー
 COPY backend/app /app/
 
 # 開発サーバーを起動
-CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
