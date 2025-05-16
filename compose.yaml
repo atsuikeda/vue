@@ -34,11 +34,13 @@ services:
       - "${BACKEND_PORT}:8000"
     volumes:
       - ./backend/app:/app
+      - backend_venv:/app/.venv
     env_file:
       - .env
     depends_on:
       db:
         condition: service_healthy
+
   frontend:
     container_name: eho-eho-frontend
     build:
