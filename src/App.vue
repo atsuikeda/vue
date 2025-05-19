@@ -1,24 +1,43 @@
 <template>
   <div class="eho-container">
-    <h1>伝えたいっ...</h1>
-    <p class="eho-count">{{ store.keydownCount }}えっほっほ</p>
+    <h1>伝えなきゃ</h1>
+    <p class="eho-count">{{ store.keydownCount }}えっほ</p>
     <div class="eho-image">
       <img :src="store.isRightFoot ? rightImg : leftImg" alt="" />
+    </div>
+
+    <div>
+      <p v-if="trivia">{{ trivia }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useKeyStore } from '@/stores/useKeyStore'
+
+import { fetchTrivia } from '@/api/fetchTrivia'
+import { translateWithDeepl } from '@/api/translateWithDeepl'
 
 import rightImg from '@/assets/right.jpg'
 import leftImg from '@/assets/left.jpg'
 
 const store = useKeyStore()
 
-const handleKeydown = () => {
+const trivia = ref('')
+
+const handleKeydown = async () => {
   store.increment()
+
+  if (store.keydownCount % 10 === 0) {
+    const rawTrivia = await fetchTrivia()
+
+    if (/[a-zA-Z]/.test(rawTrivia)) {
+      trivia.value = await translateWithDeepl(rawTrivia)
+    } else {
+      trivia.value = rawTrivia
+    }
+  }
 }
 
 onMounted(() => {
