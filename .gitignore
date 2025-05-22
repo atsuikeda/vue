@@ -34,3 +34,7 @@ coverage
 
 # Python
 .venv/
+
+# translate-data
+translate-data/*
+!translate-data/.gitkeep

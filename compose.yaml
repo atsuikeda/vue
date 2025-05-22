@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   db:
@@ -8,7 +6,7 @@ services:
       context: .
       dockerfile: containers/mysql/Dockerfile
     ports:
-      - "3306:3306"
+      - "${DB_PORT}:3306"
     volumes:
       - ./containers/mysql/init:/docker-entrypoint-initdb.d:ro
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
@@ -41,6 +39,23 @@ services:
       db:
         condition: service_healthy
 
+  libretranslate:
+    image: libretranslate/libretranslate:latest
+    container_name: libretranslate
+    ports:
+      - "5001:5000"
+    environment:
+      - LT_LOAD_ONLY=en,ja
+      - LT_DISABLE_WEB_UI=true
+      - LT_UPDATE_MODELS=false
+      - HOME=/home/libretranslate
+    volumes:
+      - ./translate-data/libretranslate:/home/libretranslate/.local/share/libretranslate
+      - ./translate-data/argos:/home/libretranslate/.local/share/argos-translate
+      - ./init.sh:/init.sh
+    command: ["sh", "/init.sh"]
+    restart: unless-stopped
+
   frontend:
     container_name: eho-eho-frontend
     build:
@@ -57,10 +72,10 @@ services:
     command: npm run dev -- --host 0.0.0.0
 
 volumes:
-  mysql_data:
-    driver: local
+  libretranslate_data:
+  libretranslate_argos:
+  backend_venv:
   node_modules:
-    driver: local
     driver_opts:
       type: none
       device: ${PWD}/node_modules
