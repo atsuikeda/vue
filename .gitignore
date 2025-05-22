@@ -35,6 +35,9 @@ coverage
 # Python
 .venv/
 
+# DV
+containers/data/*
+
 # translate-data
 translate-data/*
 !translate-data/.gitkeep
