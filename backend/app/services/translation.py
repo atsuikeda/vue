@@ -1,6 +1,6 @@
 import httpx
 from fastapi import HTTPException
-from app.config import settings
+from config import settings
 
 class TranslationService:
     def __init__(self):
@@ -20,18 +20,18 @@ class TranslationService:
                     "format": "text"
                 }
             )
-            
+
             response.raise_for_status()
             result = response.json()
-            
+
             if "translatedText" not in result:
                 raise HTTPException(
                     status_code=500,
                     detail=f"Unexpected response format: {result}"
                 )
-                
+
             return result["translatedText"]
-            
+
         except httpx.HTTPError as e:
             raise HTTPException(
                 status_code=500,
